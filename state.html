@@ -11,7 +11,7 @@
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>   
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
+<link rel="stylesheet" href="style.css">
 <script type="text/babel">
     function MinutesToHours() {
         const [amount, setAmount] = React.useState(0);
@@ -62,7 +62,50 @@
     }
 
     function KmToMiles(){
-        return <h3>KM 2 M</h3>
+        const [length, setLength] = React.useState(0);
+        const [inverted, setInverted] = React.useState(false);
+
+        const onChange = (event) => {
+            setLength(event.target.value);
+        };
+
+        const reset = () =>setLength(0);
+        const onFlip = () => {
+            reset();
+            setInverted((current) => !current);
+        };
+
+        return (
+            <div>
+                <div>
+                    <label htmlFor="Km">Kilometers</label>
+                    <input 
+                        value={inverted ? length / 1000 : length}
+                        id="kmeter"
+                        placeholder="kilometers"
+                        onChange={onChange}
+                        disabled={inverted}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="m">meters</label>
+                    <input 
+                        value={inverted ? length : length * 1000}
+                        id="meter"
+                        placeholder="meters"
+                        onChange={onChange}
+                        disabled={!inverted}
+                    />
+                    
+                </div>
+                <button onClick={reset}>Reset</button>
+                <button onClick={onFlip}>
+                    {inverted ? "Turn back" : "Invert"}
+                </button>
+
+            </div>
+
+        )
     }
     
     function App() {
